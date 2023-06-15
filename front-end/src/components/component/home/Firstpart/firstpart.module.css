@@ -1,0 +1,35 @@
+.container{
+    width:90%;
+    height:150px;
+    /* border:1px dashed blue; */
+    display:flex;
+    justify-content: space-evenly;
+    margin:1% auto;
+}
+.box{
+    width:10%;
+    /* border:1px solid black; */
+    height:100%;
+    border-radius: 5px;
+}
+.image_box{
+    height:60%;
+    width:70%;
+    margin:auto;
+    border-bottom:1px solid rgba(128, 128, 128, 0.277);
+}
+.image_box  img{
+    height:100%;
+    width:100%;
+    object-fit: cover;
+}
+.text_box{
+    text-align: center;
+    line-height: 30%;
+}
+.box:hover{
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;;
+}
+.text_box_red{
+   color: red;
+}
