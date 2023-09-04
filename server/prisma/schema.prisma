@@ -1,160 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-model User {
-  id          Int         @id @default(autoincrement())
-  username    String      @unique
-  email       String      @unique
-  password    String
-  role        UserRole    @default(CUSTOMER)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  pharmacies  Pharmacy[]
-  reviews     Review[]
-  sales       Sale[]
-  orders Order[]
-  carts Cart[]
-}
-
 model Pharmacy {
-  id              Int           @id @default(autoincrement())
-  name            String
-  address         String
-  phoneNumber     String
-  owner           User          @relation(fields: [ownerId], references: [id])
-  ownerId         Int
-  products        Product[]
-  orders          Order[]
-  inventories     Inventory[]
-  sales           Sale[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id          Int      @id @default(autoincrement())
+  name        String
+  address     String
+  phoneNumber String
+  ownerId     Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  owner       User     @relation(fields: [ownerId], references: [id])
 }
 
-model Product {
-  id              Int           @id @default(autoincrement())
-  name            String
-  description     String?
-  price           Float
-  quantity        Int
-  pharmacy        Pharmacy      @relation(fields: [pharmacyId], references: [id])
-  pharmacyId      Int
-  categories      Category[]
-  reviews         Review[]
-  carts           Cart[]
-  inventories    Inventory[]
-  subcategory     Subcategory      @relation(fields: [subcategoryId], references: [id])
-  subcategoryId   Int
-  promotion       Promotion      @relation(fields: [promotionId], references: [id])
-  promotionId     Int
-  sale            Sale      @relation(fields: [saleId], references: [id])
-  saleId          Int
-  order           Order      @relation(fields: [orderId], references: [id])
-  orderId         Int
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+model User {
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
+  firstName  String
+  lastName   String
+  email      String     @unique
+  password   String
+  role       UserRole   @default(CUSTOMER)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  pharmacies Pharmacy[]
+  sales      Sale[]
 }
 
 model Category {
-  id              Int           @id @default(autoincrement())
-  name            String
-  products        Product[]
-  subcategories   Subcategory[]
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 }
 
-model Subcategory {
-  id              Int           @id @default(autoincrement())
-  name            String
-  category        Category      @relation(fields: [categoryId], references: [id])
-  categoryId      Int
-  products        Product[]
-}
-
-model Review {
-  id              Int           @id @default(autoincrement())
-  rating          Float
-  comment         String?
-  user            User          @relation(fields: [userId], references: [id])
-  userId          Int
-  product         Product       @relation(fields: [productId], references: [id])
-  productId       Int
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-}
-
-model Promotion {
-  id              Int           @id @default(autoincrement())
-  name            String
-  description     String?
-  discount        Float
-  startDate       DateTime
-  endDate         DateTime
-  products        Product[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-}
-
-model Order {
-  id              Int           @id @default(autoincrement())
-  user            User          @relation(fields: [userId], references: [id])
-  userId          Int
-  pharmacy        Pharmacy      @relation(fields: [pharmacyId], references: [id])
-  pharmacyId      Int
-  products        Product[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-}
-
-model Inventory {
-  id              Int           @id @default(autoincrement())
-  product         Product       @relation(fields: [productId], references: [id])
-  productId       Int
-  pharmacy        Pharmacy      @relation(fields: [pharmacyId], references: [id])
-  pharmacyId      Int
-  quantity        Int
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+model Product {
+  id          Int        @id @default(autoincrement())
+  name        String
+  categoryId  Int
+  price       Float
+  barCode     String
+  status      String
+  description String
+  image       String
+  expiry_date String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  category    Category   @relation(fields: [categoryId], references: [id])
+  supplier    supplier[]
+  sales       Sale[]     @relation("ProductToSale")
 }
 
 model Sale {
-  id              Int           @id @default(autoincrement())
-  user            User          @relation(fields: [userId], references: [id])
-  userId          Int
-  pharmacy        Pharmacy      @relation(fields: [pharmacyId], references: [id])
-  pharmacyId      Int
-  products        Product[]
-  payment         Payment[]
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  productId  Int
+  quantity   Int
+  totalPrice Float
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id])
+  products   Product[] @relation("ProductToSale")
 }
 
-model Cart {
-  id              Int           @id @default(autoincrement())
-  user            User          @relation(fields: [userId], references: [id])
-  userId          Int
-  product         Product       @relation(fields: [productId], references: [id])
-  productId       Int
-  quantity        Int
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+model supplier {
+  id        Int     @id @default(autoincrement())
+  productId Int
+  userId    Int
+  name      String
+  address   String
+  phone     String
+  product   Product @relation(fields: [productId], references: [id])
 }
-
-model Payment {
-  id              Int           @id @default(autoincrement())
-  sale            Sale          @relation(fields: [saleId], references: [id])
-  saleId          Int
-  method          PaymentMethod
-  amount          Float
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
-}
-
-
 
 enum UserRole {
   CUSTOMER
@@ -162,9 +85,3 @@ enum UserRole {
   ADMIN
   SUPERADMIN
 }
-
-enum PaymentMethod {
-  CASH
-  CARD
-}
-

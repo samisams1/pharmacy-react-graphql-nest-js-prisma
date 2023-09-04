@@ -1,0 +1,29 @@
+////////////
+mutation {
+  login(input: {
+    username: "sami",
+    password: "123456"
+  })
+}
+
+////////////////////
+create user
+mutation {
+  createUser(createUserInput: {
+    username: "sami",
+    email: "sami@gail.com",
+    password: "123456",
+    firstName: "sami",
+    lastName: "mami",
+  }) {
+    id
+    username
+    email
+    password
+    firstName
+    lastName
+    role
+    createdAt
+    updatedAt
+  }
+}

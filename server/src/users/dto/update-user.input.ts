@@ -16,6 +16,12 @@ export class User {
   password: string;
 
   @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
   role: UserRole;
 
   @Field()

@@ -4,6 +4,9 @@ import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/user.entity';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
+import { RolesGuard } from 'src/auth/guards/roles.gurd';
+import Role from 'src/enums/roles.enum';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -12,21 +15,25 @@ export class UsersResolver {
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.usersService.createUser(createUserInput);
   }
-  @UseGuards(GqlAuthGuard)
+  
+  
   @Query(() => [User])
+ /* async users(
+    @Args('take', { nullable: true }) take?: number,
+    @Args('skip', { nullable: true }) skip?: number,
+  ): Promise<User[]> {
+    const users = await this.usersService.findAll(take, skip);
+    return users;
+  }*/
   async users(): Promise<User[]> {
     return this.usersService.findAll();
-  }
-  /*@Query(() => [User], { name: 'users' })
-  findAll() {
-    return this.usersService.findAll();
-  }*/
-  @UseGuards(GqlAuthGuard)
+  } 
+  @UseGuards(GqlAuthGuard,RolesGuard)
+  @Roles(Role.CUSTOMER)
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.findOne(id);
   }
-
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.deleteUser(id);

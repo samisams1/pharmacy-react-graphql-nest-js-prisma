@@ -1,0 +1,1 @@
+{"ast":null,"code":"var $TypeError = TypeError;\nvar MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF; // 2 ** 53 - 1 == 9007199254740991\n\nmodule.exports = function (it) {\n  if (it > MAX_SAFE_INTEGER) throw $TypeError('Maximum allowed index exceeded');\n  return it;\n};","map":null,"metadata":{},"sourceType":"script"}

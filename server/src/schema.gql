@@ -2,8 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Category {
+  id: Int!
+  name: String!
+  products: [Product!]
+}
+
 input CreateUserInput {
   email: String!
+  firstName: String!
+  lastName: String!
   password: String!
   username: String!
 }
@@ -24,18 +32,69 @@ type Mutation {
   removeUser(id: Int!): User!
 }
 
+type Pharmacy {
+  address: String!
+  createdAt: DateTime!
+  id: Int!
+  name: String!
+  owner: User!
+  phoneNumber: String!
+  updatedAt: DateTime!
+}
+
+type Product {
+  barCode: String!
+  categories: Category!
+  createdAt: DateTime!
+  description: String!
+  id: Int!
+  name: String!
+  price: Float!
+  sales: [Sale!]
+  supplier: [Supplier!]
+  updatedAt: DateTime!
+}
+
 type Query {
+  categories: [Category!]!
+  getExpiredDrugs: [Product!]!
   me: User!
+  pharmacies: [Pharmacy!]!
+  products: [Product!]!
+  sales: [Sale!]!
+  suppliers: [Supplier!]!
   user(id: Int!): User!
   users: [User!]!
+}
+
+type Sale {
+  createdAt: DateTime!
+  id: Int!
+  products: [Product!]
+  quantity: Float!
+  saller: User!
+  totalPrice: Float!
+  updatedAt: DateTime!
+}
+
+type Supplier {
+  address: String!
+  id: Float!
+  name: String!
+  phone: String!
+  product: Product!
 }
 
 type User {
   createdAt: DateTime!
   email: String!
+  firstName: String!
   id: Int!
+  lastName: String!
   password: String!
+  pharmacies: [Pharmacy!]
   role: String!
+  sales: [Sale!]
   updatedAt: DateTime!
   username: String!
 }
