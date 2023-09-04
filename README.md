@@ -1,8 +1,6 @@
 ## PharmEasy Clone
 
-This is the Construct Week Group Project of PharmEasy clone. The working clone of "PharmEasy", which delivers medicines and other healthcare items, now available via prescriptions. To build this clone we have used React, Redux, Express, MongoDB, Chakra. Alongside doing this project, we learnt a lot of new things about team work, proper coordination and thinking along with all the team members.😊
-
-
+Description: A Pharmacy Management System built with Nest.js, GraphQL, Prisma, PostgreSQL, and real-time notifications. The system includes features for drug management, supplier management, user authentication and authorization, notifications for drug expiration, and real-time updates for drug additions and sales.
 
 ## DEPLOYED LINK
 
@@ -10,20 +8,28 @@ soon....
 
 ## FUNCTIONALITIES IMPLEMENTED
 
-1. Login via OTP verification
-2. Login verification from backend using nodemailer
-3. Data renders from server side
-4. Products Data fetching from MongoDB database
-5. Filter Products based on Sorting
-6. Single Product page from backend also
-7. Add selected product to cart
-8. In Cart Select the Quantity, cart value to be modified Accordingly
-9. Delete the Product, if not required
-10. Order Details
-11. Amount to be Paid
-12. Available Payment Modes Shown in the Payment
+Products
+Product categories
+Purchases
+Sales
+Supplier
+Reports
+Access Control (roles and permissions)
+Users
+User Profile
+Settings (Application settings)
+Application backup
+Dashboard
+Drug Expire notifications
+
 
 Take it Easy and GO TO OUR PHARMEASY !!
+
+Dashbaord
+file:///home/samisams/Pictures/git/dashboard.png
+USer Profile
+file:///home/samisams/Pictures/git/user-profile.png
+
 
 ## Pharmacy project
 
