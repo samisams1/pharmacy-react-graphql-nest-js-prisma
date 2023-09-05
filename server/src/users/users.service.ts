@@ -1,22 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, PrismaClient, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { MemcachedService } from '../memcached/memcached.service'
 
 @Injectable()
 export class UsersService {
-  private prisma: PrismaClient;
-
-  constructor() {
+  private prisma: PrismaClient
+  private readonly memcachedService:MemcachedService;
+ constructor(memcachedService: MemcachedService) {
     this.prisma = new PrismaClient();
+    this.memcachedService = memcachedService;
   }
   async findAll(): Promise<User[]> {
-    
-    return this.prisma.user.findMany({
+    const cachedUsers = await this.memcachedService.get<User[]>('users');
+
+    if (cachedUsers) {
+      return cachedUsers;
+    }
+    const users = await this.prisma.user.findMany();
+    await this.memcachedService.set('users', JSON.stringify(users), 3600);
+    return users;
+   /* return this.prisma.user.findMany({
       include:{
         pharmacies:true,
         sales:true
       }
-    });
+    });*/
   }
  /* async findAll(take?: number, skip?: number): Promise<User[]> {
     const users = await this.prisma.user.findMany({
@@ -64,8 +73,8 @@ export class UsersService {
         }
         throw error;
       }*/
-      catch (error) {
-        if (error.code === 'P2002') {
+      /*
+       if (error.code === 'P2002') {
           const fields: string[] = [];
   
           if (error.meta?.target.includes('email')) {
@@ -80,6 +89,9 @@ export class UsersService {
             throw new DuplicationError(fields);
           }
         }
+      */
+      catch (error) {
+       
   
         throw error;
       }

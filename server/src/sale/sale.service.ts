@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {PrismaClient, Sale } from '@prisma/client';
+import {Prisma, PrismaClient, Sale } from '@prisma/client';
 
 @Injectable()
 export class SaleService {
@@ -23,6 +23,18 @@ async  findAll():Promise<Sale[]>{
           },
     },
     );
+}
+async findById(id:number):Promise<Sale  | null>{
+  return this.prisma.sale.findUnique({where:{id}})
+}
+async createSale(id:number):Promise<Sale  | null>{
+  return this.prisma.sale.findUnique({where:{id}})
+}
+async updateSale(id:number,data:Prisma.SaleUpdateInput):Promise<Sale  | null>{
+  return this.prisma.sale.update({where:{id},data})
+}
+async deleteSale(id:number):Promise<Sale  | null>{
+  return this.prisma.sale.delete({where:{id}})
 }
 }
 

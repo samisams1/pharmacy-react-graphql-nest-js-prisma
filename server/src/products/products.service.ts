@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient, Product } from '@prisma/client';
+import {  PrismaClient, Product } from '@prisma/client';
 
 @Injectable()
 export class ProductsService {
@@ -16,10 +16,21 @@ export class ProductsService {
      // const currentDate = new Date();
       return this.prisma.product.findMany({
         where: {
-          expiry_date: {
-            lte: "currentDate",
-          },
-        },
+          expiry_date: { lte: "currentDate", } },
       });
     }
+ /*   async findById(id:number):Promise<Product | null>{
+      return this.prisma.product.findUnique({where:{id}})
+    }
+    async createProduct():Promise<Product[]>{
+      return this.prisma.product.findMany();
+    }
+   async updateProduct(id:number,data:Prisma.ProductUpdateInput):Promise<Product | null>{
+      return this.prisma.product.update({where:{id},data});
+    }*/
+    async deleteProduct(id:number):Promise<Product>{
+      return this.prisma.product.delete({where:{id}})
+    }
+
+
 }

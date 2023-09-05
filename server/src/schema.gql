@@ -28,8 +28,13 @@ input LoginInput {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  deleteCategory(id: Int!): Category!
+  deleteSale(id: Float!): [Sale!]!
+  deleteSupplier(id: Int!): [Supplier!]!
   login(input: LoginInput!): String!
   removeUser(id: Int!): User!
+  updateCategory(data: UpdateCategoryInput!, id: Int!): Category!
+  updateSupplier(data: UpdateSupplierInput!, id: Int!): [Supplier!]!
 }
 
 type Pharmacy {
@@ -57,11 +62,14 @@ type Product {
 
 type Query {
   categories: [Category!]!
+  category(id: Int!): Category
   getExpiredDrugs: [Product!]!
   me: User!
   pharmacies: [Pharmacy!]!
   products: [Product!]!
+  sale(id: Int!): Sale
   sales: [Sale!]!
+  supplier(id: Int!): Supplier
   suppliers: [Supplier!]!
   user(id: Int!): User!
   users: [User!]!
@@ -83,6 +91,18 @@ type Supplier {
   name: String!
   phone: String!
   product: Product!
+}
+
+input UpdateCategoryInput {
+  name: String!
+}
+
+input UpdateSupplierInput {
+  address: String!
+  lastName: String!
+  name: String!
+  phone: String!
+  productId: Float!
 }
 
 type User {
