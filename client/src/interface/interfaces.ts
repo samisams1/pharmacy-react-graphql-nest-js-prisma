@@ -1,33 +1,16 @@
-export interface patientInterface {
+export interface userInterface {
     id?: string;
     firstName?: string;
     lastName?: string;
-    dateOfBirth?: string;
-    martialStatus?: string;
-    phoneNumber?: string;
-    maritalStatus?: string;
+    username?: string;
     email?: string;
-    address?: string;
-    country?: string;
+    role?: string;
   }
-  export interface userInterface {
-    id?: number;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    martialStatus?: string;
-    phoneNumber?: string;
-    password?:string;
-    roleId:number;
-    username:string
-    Role?:Role;
-    role:string
-  }
-  export interface Role {
+  export interface categoryInterface {
     id?: number;
     name?: string;
   }
-  export interface appointmentInterface {
+  export interface pharmayInterface {
     id?: string;
     symptoms?: string;
     diagosis?: string;
@@ -37,25 +20,23 @@ export interface patientInterface {
     patient?: number;
 
   }
-  export interface checkUpInterface {
+  export interface productInterface {
     id?: string;
-    symptoms?: string;
-    diagosis?: string;
-    checkUpDate?: string;
-    nextvist?: string;
-    doctor?: number;
-    patient: number;
+    name?: string;
+    price?: string;
+    barcode?: string;
+    description?: string;
+   // sales?: SaleInterface;
+   // supplier: supplierIiiinterface;
   }
-  export interface PatientVitals {
+  export interface supplierInterface {
     id?: string;
-    temperature?: string;
-    bpSystolic?: string;
-    bpDiastolic?: string;
-    notes?: string;
-    patient?: number;
-    doctor?: number;
+    name: string;
   }
-  
+  export interface SaleInterface {
+    id?: string;
+    name: string;
+  }
   export interface roleInterface {
     id?: string;
     name?: string;

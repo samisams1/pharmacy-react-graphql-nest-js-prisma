@@ -5,7 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import MUIDataTable from 'mui-datatables';
 import Popup from '../../Popup';
 import Button from '../../Button';
-import PatientEditForm from '../patient/PatientEditForm';
+import PatientEditForm from '../product/ProductEditForm';
 import { USER_QUERY } from '../../../graphql/Users';
 import Controls from '../../Controls';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
@@ -137,7 +137,7 @@ export const UserList = ({title,roleId}:any) => {
                     openPopup={openPopup}
                     setOpenPopup={setOpenPopup}
                 >
-     <PatientEditForm id = {newData[0]} firstName={newData[1]} lastName={newData[2]}  dateOfBirth={newData[3]}   phoneNumber={newData[4]} martialStatus={newData[5]}  email={newData[6]}  address={newData[7]}  country={newData[8]} />
+     <PatientEditForm id = {newData[0]}  />
          </Popup>
         </Grid>
       )

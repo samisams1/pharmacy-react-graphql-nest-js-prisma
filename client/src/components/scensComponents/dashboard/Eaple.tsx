@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { PATIENT_QUERY } from '../../../graphql/Patient';
-import { patientInterface } from '../../../interface/interfaces';
 import Button from '../../Button';
 import { Grid, Typography } from '@mui/material';
 import MUIDataTable from 'mui-datatables';
 import Popup from '../../Popup';
-import PatientEditForm from '../patient/PatientEditForm';
+import PatientEditForm from '../product/ProductEditForm';
+import { PRODUCT_QUERY } from '../../../graphql/Product';
+import { productInterface } from '../../../interface/interfaces';
 
 export const Eaple = () => {
     const [openPopup,setOpenPopup] =useState(false);
     const  [openCofirmPopup,setOpenConfirimPopup]=useState(false);
     const [newData,setNewData]=useState("");
-    const {loading,error,data} = useQuery(PATIENT_QUERY);
+    const {loading,error,data} = useQuery(PRODUCT_QUERY);
     if(loading) return <p>Loading...</p>
     if (error) return <p>{error.message}</p>
-    const admin = data.patients.map((row:patientInterface)=>(
-        [row.id,row.firstName,row.lastName,row.dateOfBirth,row.maritalStatus,row.phoneNumber,row.email,row.email,row.address,row.country]
+    const admin = data.patients.map((row:productInterface)=>(
+        [row.id,row.barcode,row.name,row.price,row.name,row.barcode,row.price,row.price]
     ))
     const columns = [
         {
@@ -152,7 +152,7 @@ export const Eaple = () => {
                     openPopup={openPopup}
                     setOpenPopup={setOpenPopup}
                 >
-     <PatientEditForm id = {newData[0]} firstName={newData[1]} lastName={newData[2]}  dateOfBirth={newData[3]}   phoneNumber={newData[4]} martialStatus={newData[5]}  email={newData[6]}  address={newData[7]}  country={newData[8]} />
+     <PatientEditForm id = {newData[0]}   />
          </Popup>
         </Grid>
       )

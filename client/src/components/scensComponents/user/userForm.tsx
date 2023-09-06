@@ -19,19 +19,14 @@ export const UserForm = ({roleId}:Props) => {
     firstName: '',
     lastName:'',
     email: '',
-    phoneNumber:'',
-    password:'',
     username:'',
     role:"  CUSTOMER",
-    roleId:roleId
   };
   const validate = (fieldValues: userInterface = values): boolean => {
     let temp:userInterface = { ...errors };
     if ('firstName' in fieldValues) temp.firstName = fieldValues.firstName ? '' : 'This field is required.';
     if ('lastName' in fieldValues)  temp.lastName =  fieldValues.lastName ? '' : 'This field is required.';
     if ('email' in fieldValues) temp.email = fieldValues.email ? '' : 'This field is required.';
-    if ('phoneNumber' in fieldValues) temp.phoneNumber = fieldValues.phoneNumber ? '' : 'This field is required.';
-    if ('password' in fieldValues) temp.password = fieldValues.password ? '' : 'This field is required.';
     
     setErrors({
       ...temp

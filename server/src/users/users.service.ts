@@ -12,13 +12,13 @@ export class UsersService {
     this.memcachedService = memcachedService;
   }
   async findAll(): Promise<User[]> {
-    const cachedUsers = await this.memcachedService.get<User[]>('users');
+   // const cachedUsers = await this.memcachedService.get<User[]>('users');
 
-    if (cachedUsers) {
-      return cachedUsers;
-    }
-    const users = await this.prisma.user.findMany();
-    await this.memcachedService.set('users', JSON.stringify(users), 3600);
+   // if (cachedUsers) {
+    //  return cachedUsers;
+    //}
+   const users = await this.prisma.user.findMany();
+   // await this.memcachedService.set('users', JSON.stringify(users), 3600);
     return users;
    /* return this.prisma.user.findMany({
       include:{
