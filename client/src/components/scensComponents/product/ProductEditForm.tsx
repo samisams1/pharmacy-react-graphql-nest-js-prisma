@@ -6,8 +6,9 @@ import Controls from '../../Controls'
 import { PRODUCT_QUERY, UPDATE_PATIENT_MUTATION } from '../../../graphql/Product'
 import { useMutation } from '@apollo/client'
 import { productInterface } from '../../../interface/interfaces'
+import { Category } from '@material-ui/icons'
 
-const ProductEditForm = (props:productInterface) => {
+const ProductEditForm = (props:productInterface ) => {
   const [updatePatient] = useMutation(UPDATE_PATIENT_MUTATION, {
     refetchQueries: [{ query: PRODUCT_QUERY }],
   })
@@ -16,6 +17,9 @@ const ProductEditForm = (props:productInterface) => {
     price: '',
     barcode:'',
     description: '',
+    image:'',
+    category:{},
+    expire_date:''
    // sales:{ id:''},
  ///   supplier: {id:''}
   };
@@ -24,7 +28,7 @@ const ProductEditForm = (props:productInterface) => {
     if ('name' in fieldValues) temp.name = fieldValues.name ? '' : 'This field is required.';
     if ('price' in fieldValues)  temp.price =  fieldValues.price ? '' : 'This field is required.';
     if ('barcode' in fieldValues) temp.barcode = fieldValues.barcode ? '' : 'This field is required.';
-    if ('description' in fieldValues) temp.description = fieldValues.description ? '' : 'This field is required.';
+    //if ('description' in fieldValues) temp.description = fieldValues.description ? '' : 'This field is required.';
     //if ('sales' in fieldValues) temp.sales = fieldValues.sales ? '
     setErrors({
       ...temp

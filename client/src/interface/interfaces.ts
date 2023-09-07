@@ -26,6 +26,10 @@ export interface userInterface {
     price?: string;
     barcode?: string;
     description?: string;
+    image?:string;
+    expire_date?:string;
+    category?:categoryInterface;
+
    // sales?: SaleInterface;
    // supplier: supplierIiiinterface;
   }

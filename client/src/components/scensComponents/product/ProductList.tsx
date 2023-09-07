@@ -12,13 +12,12 @@ const ProductList = () => {
   const [openCofirmPopup, setOpenConfirimPopup] = useState(false);
   const [newData,setNewData] =React.useState("")
   const { loading, error, data } = useQuery(PRODUCT_QUERY);
- /* const [deletePAtient] = useMutation(DELETE_PATIENT_MUTATION, {
-    refetchQueries: [{ query: PATIENT_QUERY }],
-  })*/
   if (loading) return <p>Loading...</p>
 	if (error) return <p>{error.message}</p>
+
+
     const patient = data.products.map((row:productInterface) => (
-        [row.id,row.name,row.barcode,row.description,row.price]          
+        [row.id,row.name,row.barcode,row.description,row.price,row.image,row.expire_date,row.category]          
     ));
     const columns = [
       
@@ -29,49 +28,49 @@ const ProductList = () => {
           }
         },
         {
-          label: "First Name",
-          name: "Title",
+          label: "Name",
+          name: "Name",
           options: {
             filter: true,
           }
         },
         {
-          name: "Last Name",
-          options: {
-            filter: true,
-            sort: false,
-          }
-        },
-        {
-          name: "Birth Date",
+          name: "Bar Code",
           options: {
             filter: true,
             sort: false,
           }
         },
         {
-          name: "Martial Status",
+          name: "Description",
           options: {
             filter: true,
             sort: false,
           }
         },
         {
-          name: "Phone Number",
+          name: "Price",
           options: {
             filter: true,
             sort: false,
           }
         },
         {
-          name: "Email",
+          name: "Image",
           options: {
             filter: true,
             sort: false,
           }
         },
         {
-          name: "Address",
+          name: "Expire Date",
+          options: {
+            filter: true,
+            sort: false,
+          }
+        },
+        {
+          name: "Category",
           options: {
             filter: true,
             sort: false,
@@ -161,7 +160,7 @@ Are you sure you want to delete this post?</Typography>
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
- <ProductEditForm id = {newData[0]} price={newData[1]} barcode={newData[2]}  description={newData[3]} />
+ <ProductEditForm id = {newData[0]} price={newData[1]} barcode={newData[2]}   />
      </Popup>
     </Grid>
   )

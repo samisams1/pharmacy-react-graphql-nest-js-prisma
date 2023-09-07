@@ -28,12 +28,13 @@ export class UsersResolver {
   async users(): Promise<User[]> {
     return this.usersService.findAll();
   } 
-  @UseGuards(GqlAuthGuard,RolesGuard)
-  @Roles(Role.CUSTOMER)
+
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.findOne(id);
   }
+  @UseGuards(GqlAuthGuard,RolesGuard)
+  @Roles(Role.CUSTOMER)
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.deleteUser(id);

@@ -16,6 +16,9 @@ const ProductForm = () => {
     price: '',
     barcode:'',
     description: '',
+    image:'',
+    category:{},
+    expire_date:''
    // sales:{ id:''},
    // supplier: {id:''}
   };
