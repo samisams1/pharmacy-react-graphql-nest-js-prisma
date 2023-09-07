@@ -27,6 +27,9 @@ export class User {
   @Field()
   createdAt: Date;
 
+  @Field({ nullable: true })
+  resetToken: string;
   @Field()
   updatedAt: Date;
+
 }

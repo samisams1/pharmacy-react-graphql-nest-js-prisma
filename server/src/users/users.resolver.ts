@@ -25,7 +25,7 @@ export class UsersResolver {
     const users = await this.usersService.findAll(take, skip);
     return users;
   }*/
-  async users(): Promise<User[]> {
+  async users(): Promise<User[] | null> {
     return this.usersService.findAll();
   } 
 
@@ -39,4 +39,23 @@ export class UsersResolver {
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.deleteUser(id);
   }
+  @Mutation(()=>User)
+  async changePassword(
+    @Args('userId') userId: number,
+    @Args('currentPassword') currentPassword: string,
+    @Args('newPassword') newPassword: string,
+  ): Promise<User | null> {
+    return this.usersService.changePassword(userId, currentPassword, newPassword);
+  }
+ /* @Mutation()
+  async forgotPassword(@Args('email') email: string): Promise<void> {
+    return this.usersService.forgotPassword(email);
+  } 
+  @Mutation()
+  async resetPassword(
+    @Args('token') token: string,
+    @Args('newPassword') newPassword: string,
+  ): Promise<User> {
+    return this.usersService.resetPassword(token, newPassword);
+  } */
 }

@@ -16,7 +16,7 @@ export const UserList = ({title,roleId}:any) => {
     const [openCofirmPopup,setOpenConfirimPopup]=useState(false);
     const [newData,setNewData]=useState("");
     const { loading, error, data } = useQuery(USER_QUERY, {
-      variables: { roleId },
+      fetchPolicy: 'cache-first'
     });
     
     if(loading) return <p>Loading...</p>

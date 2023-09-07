@@ -13,6 +13,7 @@ input CreateUserInput {
   firstName: String!
   lastName: String!
   password: String!
+  resetToken: String
   username: String!
 }
 
@@ -27,6 +28,7 @@ input LoginInput {
 }
 
 type Mutation {
+  changePassword(currentPassword: String!, newPassword: String!, userId: Float!): User!
   createUser(createUserInput: CreateUserInput!): User!
   deleteCategory(id: Int!): Category!
   deleteSale(id: Float!): [Sale!]!

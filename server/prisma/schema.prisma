@@ -30,6 +30,8 @@ model User {
   updatedAt  DateTime   @updatedAt
   pharmacies Pharmacy[]
   sales      Sale[]
+  resetToken String?
+
 }
 
 model Category {

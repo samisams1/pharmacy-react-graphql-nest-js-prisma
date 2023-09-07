@@ -25,6 +25,7 @@ CREATE TABLE "User" (
     "role" "UserRole" NOT NULL DEFAULT 'CUSTOMER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "resetToken" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

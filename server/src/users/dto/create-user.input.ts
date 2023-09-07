@@ -16,4 +16,9 @@ export class CreateUserInput {
 
   @Field()
   password: string;
+
+  @Field({ nullable: true })
+  resetToken: string ;
+
+  
 }
