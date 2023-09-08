@@ -2,21 +2,43 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { User } from './entities/user.entity';
-import { UseGuards } from '@nestjs/common';
+import { BadRequestException, UseGuards, UsePipes } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/gql-auth-guard';
 import { RolesGuard } from 'src/auth/guards/roles.gurd';
 import Role from 'src/enums/roles.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { ValidationPipe } from '../common/pipes/validation.pipe';
+import isValidEmail from 'src/common/validators/isEmailvalid';
 
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
   @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+  @UsePipes(new ValidationPipe())
+ // @UsePipes(new ValidationPipe())
+  async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+
+
+    try {
+      // Validate unique username and check valid email
+    const username = createUserInput.username;
+    const email = createUserInput.email;
+    const existingUser = await this.usersService.findUserByUsername(username);
+   // const existingEmail = await this.usersService.findUserByUsername(email);
+    if (existingUser) {
+      throw new Error('Username already exists');
+    }
+    if (!isValidEmail(email)) {
+      throw new Error('Invalid email format');
+    }
+   
     return this.usersService.createUser(createUserInput);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
+   
   }
-  
-  
+
   @Query(() => [User])
  /* async users(
     @Args('take', { nullable: true }) take?: number,
@@ -35,6 +57,7 @@ export class UsersResolver {
   }
   @UseGuards(GqlAuthGuard,RolesGuard)
   @Roles(Role.CUSTOMER)
+  @UsePipes(new ValidationPipe())
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.deleteUser(id);

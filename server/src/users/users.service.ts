@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Prisma, PrismaClient, User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { comparePasswords, hashPassword } from '../utils/password.utils';
@@ -15,7 +15,6 @@ export class UsersService {
   }
   async findAll(): Promise<User[]> {
     const cachedUsers = await this.memcachedService.get<User[]>('users');
-  
     if (cachedUsers) {
       console.log(cachedUsers);
     }
@@ -49,7 +48,10 @@ export class UsersService {
   async createUser(input: Prisma.UserCreateInput): Promise<User> {
     {
       try {
-          const { username,email, password,firstName,lastName } = input;
+        const { username,email, password,firstName,lastName } = input;
+        if (!firstName) {
+          throw new BadRequestException('First name is required');
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -94,7 +96,7 @@ export class UsersService {
       catch (error) {
        
   
-        throw error;
+        throw error.message;
       }
     }
   /*  const { username,email, password } = input;
@@ -108,6 +110,9 @@ export class UsersService {
     });
 
     return user; */
+  }
+  async findUserByUsername(username: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { username } });
   }
   async updateUser(id: number, data: Prisma.UserCreateInput): Promise<User> {
     return this.prisma.user.update({ where: { id }, data });
